@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('internships')) {
         Schema::create('internships', function (Blueprint $table) {
             $table->id();
             $table->string('title');
@@ -26,7 +27,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-
+    }
     /**
      * Reverse the migrations.
      *

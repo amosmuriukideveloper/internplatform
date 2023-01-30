@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('applications')) {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
             $table->integer('student_id')->unsigned();
@@ -25,7 +26,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-
+}
     /**
      * Reverse the migrations.
      *
