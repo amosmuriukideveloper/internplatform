@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateBusinessesRequest;
+use App\Http\Requests\UpdateBusinessesRequest;
+use App\Models\Businesses;
 use Illuminate\Http\Request;
 
 class BusinessesController extends Controller
@@ -13,7 +16,8 @@ class BusinessesController extends Controller
      */
     public function index()
     {
-        //
+        $businesses = Businesses::all();
+        return view('businesses.index', compact('businesses'));
     }
 
     /**
@@ -23,7 +27,7 @@ class BusinessesController extends Controller
      */
     public function create()
     {
-        //
+        return view('businesses.create');
     }
 
     /**
@@ -32,9 +36,20 @@ class BusinessesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateBusinessesRequest $request)
     {
-        //
+        $business = new Businesses();
+        $business->name = $request->name;
+        $business->email = $request->email;
+        $business->password = bcrypt($request->password);
+        $business->location = $request->location;
+        $business->industry = $request->industry;
+        $business->website = $request->website;
+        $business->is_active = $request->is_active;
+        $business->save();
+
+        return redirect()->route('businesses.index')->with('success', 'Business created successfully.');
+ 
     }
 
     /**
@@ -56,7 +71,8 @@ class BusinessesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $business = Businesses::findOrFail($id);
+        return view('businesses.edit', compact('business'));
     }
 
     /**
@@ -66,9 +82,22 @@ class BusinessesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBusinessesRequest $request, $id)
     {
-        //
+    
+        $business = Businesses::findOrFail($id);
+        $business->name = $request->name;
+        $business->email = $request->email;
+        $business->password = bcrypt($request->password);
+        $business->location = $request->location;
+        $business->industry = $request->industry;
+        $business->website = $request->website;
+        $business->is_active = $request->is_active;
+        $business->save();
+
+        
+
+        return redirect()->route('businesses.index')->with('success', 'Business updated successfully');
     }
 
     /**
@@ -79,6 +108,8 @@ class BusinessesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $business = Businesses::findOrFail($id);
+        $business->delete();
+        return response()->json(['message' => 'Business successfully deleted'], 200);
     }
 }

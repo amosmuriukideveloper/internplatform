@@ -24,7 +24,13 @@ class UpdateBusinessesRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'string|max:255',
+            'email' => 'string|email|max:255|unique:businesses,email,' . $this->route('business')->id,
+            'password' => 'string|min:8|confirmed',
+            'location' => 'string|max:255',
+            'industry' => 'string|max:255',
+            'website' => 'string|max:255|nullable',
+            'is_active' => 'boolean',
         ];
     }
 }

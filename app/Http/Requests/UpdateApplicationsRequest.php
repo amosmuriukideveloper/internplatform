@@ -24,7 +24,11 @@ class UpdateApplicationsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'student_id' => 'required|integer',
+            'internship_id' => 'required|integer',
+            'resume' => 'required|file|mimes:pdf',
+            'cover_letter' => 'required|file|mimes:pdf',
+            'status' => 'required|in:pending,accepted,rejected',
         ];
     }
 }

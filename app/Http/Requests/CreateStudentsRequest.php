@@ -26,13 +26,13 @@ class CreateStudentsRequest extends FormRequest
         return [
            
             'name' => ['required'],
-            'email' => ['unique()'],
+            'email' => ['required', 'unique:students'],
             'password' => ['required'],
             'school' => ['required'],
             'major' => ['required'],
-            'gpa' =>['required'] ,
+            'gpa' => ['required'],
             'resume' => ['required'],
-            'is_active' => ['default(true)'],
+            'is_active' => ['default:true']
            
         ];
     }

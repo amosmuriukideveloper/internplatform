@@ -24,7 +24,10 @@ class UpdateMessagesRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'sender_id' => 'required|integer',
+            'receiver_id' => 'required|integer',
+            'message' => 'required|string',
+            'is_read' => 'nullable|boolean',
         ];
     }
 }

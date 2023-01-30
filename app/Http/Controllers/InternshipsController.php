@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateInternshipsRequest;
+use App\Http\Requests\UpdateApplicationsRequest;
+use App\Http\Requests\UpdateInternshipsRequest;
+use App\Models\Internships;
 use Illuminate\Http\Request;
 
 class InternshipsController extends Controller
@@ -13,7 +17,9 @@ class InternshipsController extends Controller
      */
     public function index()
     {
-        //
+        $internships = Internships::all();
+
+        return view('internships.index', ['internships' => $internships]);
     }
 
     /**
@@ -23,7 +29,7 @@ class InternshipsController extends Controller
      */
     public function create()
     {
-        //
+        return view('internships.create');
     }
 
     /**
@@ -32,9 +38,11 @@ class InternshipsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateInternshipsRequest $request)
     {
-        //
+        $internships = Internships::create($request->validated());
+
+        return redirect()->route('internships.index')->with('success', 'Internship created successfully');
     }
 
     /**
@@ -56,7 +64,8 @@ class InternshipsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $internship = Internships::findOrFail($id);
+        return view('internships.edit', compact('internship'));
     }
 
     /**
@@ -66,9 +75,11 @@ class InternshipsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateInternshipsRequest $request, $id)
     {
-        //
+        $internship = Internships::findOrFail($id);
+        $internship->update($request->all());
+        return redirect()->route('internships.index');
     }
 
     /**
@@ -79,6 +90,9 @@ class InternshipsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $internship = Internships::findOrFail($id);
+    $internship->delete();
+
+    return response()->json(['message' => 'Internship deleted successfully.'], 200);
     }
 }

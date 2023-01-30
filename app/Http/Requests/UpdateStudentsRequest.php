@@ -24,7 +24,14 @@ class UpdateStudentsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required'],
+            'email' => ['required', 'unique:students'],
+            'password' => ['required'],
+            'school' => ['required'],
+            'major' => ['required'],
+            'gpa' => ['required'],
+            'resume' => ['required'],
+            'is_active' => ['default:true']
         ];
     }
 }

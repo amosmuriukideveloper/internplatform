@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateApplicationsRequest;
+use App\Models\Applications;
 use Illuminate\Http\Request;
 
 class ApplicationsController extends Controller
@@ -13,7 +15,9 @@ class ApplicationsController extends Controller
      */
     public function index()
     {
-        //
+        $applications = Applications::all();
+
+        return view('applications.index', compact('applications'));
     }
 
     /**
@@ -23,7 +27,7 @@ class ApplicationsController extends Controller
      */
     public function create()
     {
-        //
+        return view('applications.create');
     }
 
     /**
@@ -34,7 +38,11 @@ class ApplicationsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $application = new Applications();
+        $application->fill($request->all());
+        $application->save();
+
+        return redirect()->route('applications.index')->with('success', 'Application created successfully');
     }
 
     /**
@@ -56,7 +64,9 @@ class ApplicationsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $application = Applications::findOrFail($id);
+
+        return view('applications.edit', compact('application'));
     }
 
     /**
@@ -66,9 +76,14 @@ class ApplicationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateApplicationsRequest $request, $id)
     {
-        //
+        $application = Applications::findOrFail($id);
+        $application->fill($request->all());
+        $application->save();
+
+        return redirect()->route('applications.index')->with('success', 'Application updated successfully');
+    
     }
 
     /**
@@ -79,6 +94,9 @@ class ApplicationsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $application = Applications::findOrFail($id);
+        $application->delete();
+
+        return redirect()->route('applications.index')->with('success', 'Application deleted successfully');
     }
 }

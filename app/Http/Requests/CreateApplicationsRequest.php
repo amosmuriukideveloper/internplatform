@@ -24,7 +24,11 @@ class CreateApplicationsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'student_id' => 'required|exists:students,id',
+            'internship_id' => 'required|exists:internships,id',
+            'cover_letter' => 'required|file|mimes:pdf',
+            'resume' => 'required|file|mimes:pdf',
+            'status' => 'required|in:pending,accepted,rejected',
         ];
     }
 }

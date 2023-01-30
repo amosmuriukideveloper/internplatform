@@ -24,7 +24,13 @@ class CreateBusinessesRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:businesses',
+            'password' => 'required|string',
+            'location' => 'required|string',
+            'industry' => 'required|string',
+            'website' => 'nullable|string',
+            'is_active' => 'nullable|boolean',
         ];
     }
 }
