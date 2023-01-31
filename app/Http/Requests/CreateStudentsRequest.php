@@ -1,8 +1,15 @@
 <?php
 
 namespace App\Http\Requests;
+namespace App\Transformers;
+use League\Fractal\TransformerAbstract;
+
+
+
+
 
 use Illuminate\Foundation\Http\FormRequest;
+
 
 class CreateStudentsRequest extends FormRequest
 {
@@ -34,6 +41,23 @@ class CreateStudentsRequest extends FormRequest
             'resume' => ['required'],
             'is_active' => ['default:true']
            
+        ];
+    }
+}
+
+class CreateStudentsRequestTransformer extends TransformerAbstract
+{
+    public function transform(CreateStudentsRequest $request)
+    {
+        return [
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+            'school' => $request->input('school'),
+            'major' => $request->input('major'),
+            'gpa' => $request->input('gpa'),
+            'resume' => $request->input('resume'),
+            'is_active' => $request->input('is_active', true)
         ];
     }
 }

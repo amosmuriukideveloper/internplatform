@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Students;
 use Illuminate\Foundation\Http\FormRequest;
+use League\Fractal\TransformerAbstract;
 
 class UpdateStudentsRequest extends FormRequest
 {
@@ -35,3 +37,30 @@ class UpdateStudentsRequest extends FormRequest
         ];
     }
 }
+
+class UpdateStudentsTransformer extends TransformerAbstract
+{
+    /**
+     * Transform a Student model.
+     *
+     * @param UpdateStudentsRequest $student
+     * @return array
+     */
+    public function transform(UpdateStudentsRequest $student)
+    {
+        return [
+            'id' => $student->id,
+            'name' => $student->name,
+            'email' => $student->email,
+            'password' => $student->password,
+            'school' => $student->school,
+            'major' => $student->major,
+            'gpa' => $student->gpa,
+            'resume' => $student->resume,
+            'is_active' => $student->is_active,
+        ];
+    }
+}
+
+
+

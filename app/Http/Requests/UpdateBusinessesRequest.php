@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use League\Fractal\TransformerAbstract;
 
 class UpdateBusinessesRequest extends FormRequest
 {
@@ -31,6 +32,28 @@ class UpdateBusinessesRequest extends FormRequest
             'industry' => 'string|max:255',
             'website' => 'string|max:255|nullable',
             'is_active' => 'boolean',
+        ];
+    }
+}
+
+class UpdateBusinessesRequestTransformer extends TransformerAbstract
+{
+    /**
+     * A Fractal transformer.
+     *
+     * @param UpdateBusinessesRequest $request
+     * @return array
+     */
+    public function transform(UpdateBusinessesRequest $request)
+    {
+        return [
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+            'location' => $request->input('location'),
+            'industry' => $request->input('industry'),
+            'website' => $request->input('website'),
+            'is_active' => $request->input('is_active'),
         ];
     }
 }

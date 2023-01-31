@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use League\Fractal\TransformerAbstract;
 
 class UpdateApplicationsRequest extends FormRequest
 {
@@ -29,6 +30,25 @@ class UpdateApplicationsRequest extends FormRequest
             'resume' => 'required|file|mimes:pdf',
             'cover_letter' => 'required|file|mimes:pdf',
             'status' => 'required|in:pending,accepted,rejected',
+        ];
+    }
+}
+
+class UpdateApplicationsTransformer extends TransformerAbstract
+{
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
+     */
+    public function transform(array $data)
+    {
+        return [
+            'student_id' => isset($data['student_id']) ? (int) $data['student_id'] : null,
+            'internship_id' => isset($data['internship_id']) ? (int) $data['internship_id'] : null,
+            'cover_letter' => isset($data['cover_letter']) ? $data['cover_letter'] : null,
+            'resume' => isset($data['resume']) ? $data['resume'] : null,
+            'status' => isset($data['status']) ? $data['status'] : null,
         ];
     }
 }
