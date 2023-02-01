@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateInternshipsRequest;
-use App\Http\Requests\UpdateApplicationsRequest;
+
 use App\Http\Requests\UpdateInternshipsRequest;
 use App\Models\Internships;
 use Illuminate\Http\Request;

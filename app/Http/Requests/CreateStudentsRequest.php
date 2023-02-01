@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 namespace App\Transformers;
-use League\Fractal\TransformerAbstract;
+
 
 
 
@@ -45,19 +45,3 @@ class CreateStudentsRequest extends FormRequest
     }
 }
 
-class CreateStudentsRequestTransformer extends TransformerAbstract
-{
-    public function transform(CreateStudentsRequest $request)
-    {
-        return [
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => $request->input('password'),
-            'school' => $request->input('school'),
-            'major' => $request->input('major'),
-            'gpa' => $request->input('gpa'),
-            'resume' => $request->input('resume'),
-            'is_active' => $request->input('is_active', true)
-        ];
-    }
-}

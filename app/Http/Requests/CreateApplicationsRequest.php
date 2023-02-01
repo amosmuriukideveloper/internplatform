@@ -34,21 +34,3 @@ class CreateApplicationsRequest extends FormRequest
     }
 }
 
-class CreateApplicationsTransformer extends TransformerAbstract
-{
-    /**
-     * @param array<string, mixed> $data
-     *
-     * @return array<string, mixed>
-     */
-    public function transform(array $data)
-    {
-        return [
-            'student_id' => (int) $data['student_id'],
-            'internship_id' => (int) $data['internship_id'],
-            'cover_letter' => $data['cover_letter'],
-            'resume' => $data['resume'],
-            'status' => $data['status'],
-        ];
-    }
-}
